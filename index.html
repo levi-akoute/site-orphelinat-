@@ -3,18 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Le site ne doit pas apparaître dans Google -->
   <meta name="robots" content="noindex,nofollow">
+
+  <!-- Politique de sécurité (CSP) : le navigateur n'accepte que les scripts, styles,
+       polices et connexions venant des adresses listées ici. Conséquence : aucun
+       JavaScript ni style écrit directement dans le HTML (onclick=, style=). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://frfgwhvaypnwbbodsaxa.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <title>Orphelinat Emmanuel · Espace du personnel</title>
+  <meta name="theme-color" content="#12304a">
+  <link rel="icon" type="image/png" href="assets/favicon-64.png">
+
+  <!-- Polices : Public Sans (texte) et Source Serif 4 (titres) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
-  <link rel="icon" href="assets/logo.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app"></div>
-  <div id="toast" role="status"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-  <script src="app.js"></script>
+  <!-- Tout le contenu est dessiné ici par app.js -->
+  <div id="app">
+    <noscript><p class="sans-js">Ce site a besoin de JavaScript pour fonctionner.</p></noscript>
+  </div>
+
+  <!-- Zone des messages (« Fiche enregistrée », erreurs…) lue par les lecteurs d'écran -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Bibliothèque Supabase. « integrity » : le navigateur vérifie l'empreinte du fichier
+       et refuse de l'exécuter s'il a été modifié sur le serveur du CDN. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"
+    integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug"
+    crossorigin="anonymous"></script>
+
+  <!-- Code du site (module : il importe les fichiers du dossier js/) -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>

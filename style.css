@@ -1,121 +1,627 @@
-:root{--navy:#12304a;--green:#17795f;--sand:#cf9b3f;--bg:#eef3f1;--ink:#1b2a36;--muted:#62737f;--line:#d9e2df;--red:#c4553d}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Public Sans",system-ui,sans-serif}
-h1,h2{font-family:"Source Serif 4",Georgia,serif;font-weight:600;color:var(--navy);margin:0;line-height:1.2}
-h1{font-size:30px}h2{font-size:22px}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:3px solid var(--sand);outline-offset:2px}
-.muted{color:var(--muted)}
+/* =====================================================================
+   ORPHELINAT EMMANUEL : FEUILLE DE STYLE
+   Sommaire :
+     1. Couleurs et réglages de base
+     2. Éléments communs (boutons, champs, pastilles, cartes…)
+     3. Page de connexion
+     4. Cadre : menu latéral + barre du haut
+     5. Tableau de bord
+     6. Tableaux et filtres (dossiers, équipe, journal)
+     7. Fiche enfant (onglets, documents, historique)
+     8. Formulaires
+     9. Fenêtres de dialogue et messages
+    10. Téléphone et tablette
+   ===================================================================== */
 
-/* Boutons et champs */
-.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:8px;padding:10px 18px;background:var(--green);color:#fff;font:600 14px inherit;cursor:pointer}
-.btn:hover{background:#115f4b}
-.btn.ghost{background:transparent;color:var(--navy);box-shadow:inset 0 0 0 1px var(--line)}
-.btn.ghost:hover{background:#fff}
-.btn.danger{background:transparent;color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
-.btn.small{padding:6px 12px;font-size:13px}
-label{display:grid;gap:4px;font-weight:500;font-size:14px}
-input,select,textarea{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
-input:focus,select:focus,textarea:focus{border-color:var(--green);outline:none;box-shadow:0 0 0 3px #17795f26}
-input[type=checkbox]{width:auto}
 
-/* Connexion */
-.login{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
-.login aside{background:var(--navy);color:#fff;padding:64px;display:flex;flex-direction:column;justify-content:flex-end;gap:12px}
-.login aside h1{color:#fff;font-size:42px}
-.login aside p{margin:0;color:#b9cddb;font-size:17px;max-width:30ch}
-.login form{align-self:center;justify-self:center;width:min(380px,88%);display:grid;gap:16px}
-.login.solo{display:grid;place-items:center}
-.login.solo .card{max-width:420px;text-align:center;display:grid;gap:14px;justify-items:center}
+/* ---------------------------------------------------------------------
+   1. COULEURS ET RÉGLAGES DE BASE
+   Les couleurs sont définies une seule fois ici (variables CSS) :
+   pour changer une couleur partout, on la change ici.
+   --------------------------------------------------------------------- */
+:root {
+  --bleu-nuit: #12304a;      /* couleur principale (menu, titres) */
+  --bleu-nuit-fonce: #0c2236;
+  --bleu-clair: #e6eef5;
+  --vert: #17795f;           /* actions principales, statut Actif */
+  --vert-fonce: #115f4b;
+  --vert-clair: #e2f2eb;
+  --sable: #cf9b3f;          /* accent (couleur du logo clair) */
+  --sable-fonce: #8a6212;
+  --sable-clair: #f8eed8;
+  --rouge: #b8432c;          /* suppression, erreurs */
+  --rouge-clair: #fbe9e4;
 
-/* Structure */
-.mark{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--navy);color:var(--sand);font:600 15px "Source Serif 4",serif}
-main{max-width:1160px;margin:0 auto;padding:32px clamp(16px,4vw,48px) 64px}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:24px;flex-wrap:wrap}
-.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px}
-.card+.card{margin-top:16px}
+  --fond: #f3f5f4;           /* fond des pages */
+  --surface: #ffffff;        /* fond des cartes */
+  --texte: #1b2a36;
+  --texte-discret: #5d6e7a;
+  --trait: #dfe5e2;          /* bordures */
+  --survol: #f5f8f7;
 
-/* Tableau de bord */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
-.stat{display:grid;gap:2px;border-left:4px solid var(--green)}
-.stat:nth-child(2){border-left-color:var(--navy)}
-.stat:nth-child(3){border-left-color:var(--sand)}
-.stat span{color:var(--muted)}
-.stat b{font:600 34px "Source Serif 4",serif;color:var(--navy)}
-.bar{display:flex;gap:12px;margin-bottom:16px}
-.bar select{max-width:200px}
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse}
-th{text-align:left;font-weight:600;color:var(--muted);font-size:13px;padding:8px 12px;border-bottom:1px solid var(--line)}
-td{padding:12px;border-bottom:1px solid var(--line)}
-tbody tr:hover{background:#f6faf8}
-.mat{font-variant-numeric:tabular-nums;color:var(--navy);font-weight:600}
-.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:13px;font-weight:600;background:#dff1ea;color:#115f4b}
-.pill.Sorti{background:#f8ecd2;color:#8a6212}
-.pill.Archivé{background:#e6eaed;color:#51606b}
-.empty{text-align:center;color:var(--muted);padding:32px}
+  --rayon: 12px;             /* arrondi des cartes */
+  --rayon-petit: 8px;        /* arrondi des boutons et champs */
+  --ombre: 0 1px 2px rgb(18 48 74 / 0.06), 0 2px 8px rgb(18 48 74 / 0.04);
+  --ombre-forte: 0 12px 40px rgb(12 34 54 / 0.18);
+  --largeur-menu: 264px;
 
-/* Fiche enfant */
-.profile{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.avatar{width:72px;height:72px;border-radius:50%;background:var(--navy);color:var(--sand);display:grid;place-items:center;font:600 30px "Source Serif 4",serif}
-.profile .grow{flex:1}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.facts small{display:block;color:var(--muted)}
-.facts p{margin:0;white-space:pre-wrap}
-.doc{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
-.doc div{flex:1}
-.doc small{color:var(--muted);display:block}
-.up{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;margin-top:16px}
-
-/* Formulaires */
-.form .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px}
-.wide{grid-column:1/-1}
-
-/* Message */
-#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,20px);background:var(--navy);color:#fff;padding:12px 20px;border-radius:8px;opacity:0;pointer-events:none;transition:.2s}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-#toast.bad{background:var(--red)}
-
-@media(max-width:760px){
-  .login{grid-template-columns:1fr}.login aside{padding:32px;min-height:240px}.login aside h1{font-size:30px}
-  .stats,.form .grid,.up{grid-template-columns:1fr}
-  .top{flex-wrap:wrap;gap:12px}.who span{display:none}
+  --police-texte: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --police-titre: "Source Serif 4", Georgia, serif;
 }
-@media(prefers-reduced-motion:reduce){#toast{transition:none}}
 
-/* En-tête commun et page d'accueil */
-.top{position:relative;z-index:2;display:flex;align-items:center;gap:24px;padding:14px clamp(16px,4vw,48px);background:var(--navy);color:#fff}
-.brand{display:flex;align-items:center;gap:12px;font:600 19px "Source Serif 4",Georgia,serif;color:#fff}
-.brand img{width:44px;height:44px;object-fit:contain}
-.top nav{display:flex;gap:4px;flex:1}
-.top nav a{padding:10px 14px;color:#c3d3de;font-weight:500;border-bottom:2px solid transparent}
-.top nav a:hover{color:#fff}
-.top nav a.on{color:#fff;border-bottom-color:var(--sand)}
-.who{display:flex;align-items:center;gap:12px;font-weight:500}
-.btn.gold{background:var(--sand);color:var(--navy)}.btn.gold:hover{background:#dcab52}
-.top .btn.ghost{color:#fff;box-shadow:inset 0 0 0 1px #4a6a85}.top .btn.ghost:hover{background:#1c4263}
-.back{color:var(--green);font-weight:600;text-align:center}
-.login aside img{width:min(300px,70%);margin-bottom:auto}
-.hero{position:relative;overflow:hidden;background:var(--navy);color:#fff;min-height:calc(100vh - 74px);display:flex;align-items:center}
-.wm{position:absolute;right:max(24px,6vw);top:50%;transform:translateY(-50%);width:min(46vw,520px);opacity:.16;pointer-events:none}
-.hero-in{position:relative;width:min(1180px,100%);margin:0 auto;padding:48px clamp(16px,4vw,48px) 96px}
-.hero h1{color:#fff;font-size:clamp(32px,5.5vw,58px);max-width:11em;margin-bottom:12px}
-.hero p{color:#c3d3de;font-size:19px;margin:0 0 32px}
-.hero label{color:#c3d3de;margin-bottom:8px}
-.search{display:flex;gap:8px;max-width:680px;padding:6px;background:#fff;border-radius:12px}
-.search input{border:0;height:50px;font-size:17px}
-.search input:focus{box-shadow:none}
-.search .btn{padding:0 26px}
-.hero .hint{font-size:14px;margin:14px 0 0}
-#res{max-width:680px;margin-top:16px;display:grid;gap:8px}
-.res{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 16px;background:#fff;color:var(--ink);border-radius:10px}
-.res:hover{outline:2px solid var(--sand)}
-.res small{color:var(--muted);margin-left:auto}
-#res .none{margin:0;font-size:16px}
-@media(max-width:760px){
-  .top{flex-wrap:wrap;gap:8px}.brand{font-size:16px}.brand img{width:36px;height:36px}
-  .top nav{order:3;flex-basis:100%;overflow-x:auto}.top nav a{white-space:nowrap}.who{margin-left:auto}
-  .btn{min-height:44px}.hero{min-height:auto}.hero-in{padding-bottom:64px}
-  .wm{width:70vw;opacity:.1;right:-10vw;top:auto;bottom:-8vw;transform:none}
-  .search{flex-direction:column}.search .btn{height:48px}
+/* Les tailles incluent bordures et marges intérieures (plus simple à calculer) */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* L'attribut « hidden » cache TOUJOURS l'élément, même si une classe dit le contraire */
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font: 15px/1.55 var(--police-texte);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.25; color: var(--bleu-nuit); }
+h1 { font: 600 28px/1.2 var(--police-titre); }
+h2 { font: 600 19px/1.3 var(--police-titre); }
+h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texte-discret); }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+
+/* Contour visible au clavier (accessibilité) */
+:focus-visible { outline: 3px solid var(--sable); outline-offset: 2px; border-radius: 4px; }
+
+/* Texte caché à l'écran mais lu par les lecteurs d'écran */
+.visuellement-cache {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.discret { color: var(--texte-discret); }
+.vide { color: #9aa8b1; font-style: italic; }
+.sans-js { padding: 40px; text-align: center; }
+
+/* Icônes SVG : dessinées au trait, de la couleur du texte */
+.ic {
+  width: 18px; height: 18px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.8;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+
+/* ---------------------------------------------------------------------
+   2. ÉLÉMENTS COMMUNS
+   --------------------------------------------------------------------- */
+
+/* Boutons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 40px; padding: 8px 16px;
+  border: 1px solid transparent; border-radius: var(--rayon-petit);
+  font: 600 14px/1.2 var(--police-texte);
+  cursor: pointer; white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn-principal { background: var(--vert); color: #fff; }
+.btn-principal:hover { background: var(--vert-fonce); }
+.btn-secondaire { background: var(--surface); color: var(--bleu-nuit); border-color: var(--trait); }
+.btn-secondaire:hover { background: var(--survol); border-color: #c9d3cf; }
+.btn-danger { background: var(--rouge); color: #fff; }
+.btn-danger:hover { background: #9c3622; }
+.btn-petit { min-height: 34px; padding: 6px 12px; font-size: 13px; }
+.btn-petit .ic { width: 16px; height: 16px; }
+.btn-large { min-height: 48px; font-size: 15px; }
+
+/* Boutons ronds avec seulement une icône */
+.btn-icone {
+  display: inline-grid; place-items: center;
+  width: 38px; height: 38px; padding: 0;
+  border: 0; border-radius: var(--rayon-petit);
+  background: transparent; color: var(--texte-discret); cursor: pointer;
+}
+.btn-icone:hover { background: var(--survol); color: var(--bleu-nuit); }
+.btn-icone-danger:hover { background: var(--rouge-clair); color: var(--rouge); }
+.btn-icone-clair { color: #9fb6c8; }
+.btn-icone-clair:hover { background: rgb(255 255 255 / 0.08); color: #fff; }
+
+/* Champs de saisie */
+label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--texte); }
+label small { font-weight: 400; }
+input, select, textarea {
+  width: 100%; min-height: 42px; padding: 9px 12px;
+  border: 1px solid #cfd8d4; border-radius: var(--rayon-petit);
+  background: var(--surface); color: var(--texte);
+  font: 400 15px/1.4 var(--police-texte);
+}
+textarea { resize: vertical; min-height: 84px; }
+input:hover, select:hover, textarea:hover { border-color: #b5c2bd; }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--vert);
+  box-shadow: 0 0 0 3px rgb(23 121 95 / 0.16);
+}
+input[type="checkbox"], input[type="radio"] { width: auto; min-height: 0; accent-color: var(--vert); }
+input[type="file"] { padding: 7px; background: var(--survol); cursor: pointer; }
+input::placeholder, textarea::placeholder { color: #9aa8b1; }
+.majuscules { text-transform: uppercase; }
+.majuscules::placeholder { text-transform: none; }
+
+/* Message d'erreur sous un formulaire */
+.message-erreur, .dialogue-erreur {
+  padding: 10px 14px; border-radius: var(--rayon-petit);
+  background: var(--rouge-clair); color: var(--rouge); font-size: 14px; font-weight: 500;
+}
+
+/* Cartes (blocs blancs) */
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon);
+  box-shadow: var(--ombre);
+  padding: 24px;
+}
+.carte-tete { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+
+/* Ronds avec initiales */
+.avatar {
+  display: inline-grid; place-items: center; flex: none;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bleu-clair); color: var(--bleu-nuit);
+  font: 600 15px var(--police-titre);
+}
+.avatar-petit { width: 34px; height: 34px; font-size: 13px; }
+.avatar-grand { width: 72px; height: 72px; font-size: 26px; background: var(--bleu-nuit); color: var(--sable); }
+
+/* Pastilles de statut */
+.pastille {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 99px;
+  font-size: 12.5px; font-weight: 600; white-space: nowrap;
+}
+.pastille::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pastille-actif { background: var(--vert-clair); color: var(--vert-fonce); }
+.pastille-sorti { background: var(--sable-clair); color: var(--sable-fonce); }
+.pastille-archive { background: #e8ecee; color: #55646f; }
+
+/* Petites étiquettes (rôle, type d'action du journal) */
+.etiquette {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  background: var(--bleu-clair); color: var(--bleu-nuit);
+  font-size: 12px; font-weight: 600;
+}
+.etiquette-insert { background: var(--vert-clair); color: var(--vert-fonce); }
+.etiquette-update { background: var(--sable-clair); color: var(--sable-fonce); }
+.etiquette-delete { background: var(--rouge-clair); color: var(--rouge); }
+.etiquette-consultation { background: var(--bleu-clair); color: var(--bleu-nuit); }
+
+/* Matricule : chiffres alignés */
+.matricule { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--bleu-nuit); letter-spacing: 0.02em; }
+
+/* En-tête de chaque page */
+.entete-page { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+.sur-titre { margin-bottom: 4px; color: var(--texte-discret); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.sur-titre::first-letter { text-transform: uppercase; }
+
+/* Liens « retour » et liens discrets */
+.lien-retour {
+  display: inline-flex; align-items: center; gap: 6px; margin-bottom: 16px;
+  color: var(--texte-discret); font-size: 14px; font-weight: 600;
+}
+.lien-retour:hover { color: var(--vert); }
+.lien-discret { display: inline-flex; align-items: center; gap: 2px; color: var(--vert); font-size: 13.5px; font-weight: 600; }
+.lien-discret .ic { width: 15px; height: 15px; }
+.lien-discret:hover { text-decoration: underline; }
+
+/* Chargement */
+.chargement { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 48px; color: var(--texte-discret); }
+.roue {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2.5px solid var(--trait); border-top-color: var(--vert);
+  animation: tourner 0.8s linear infinite;
+}
+@keyframes tourner { to { transform: rotate(360deg); } }
+
+/* Liste vide */
+.etat-vide { display: grid; justify-items: center; gap: 6px; padding: 40px 16px; text-align: center; color: var(--texte-discret); }
+.etat-vide > .ic { width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--survol); color: #8b9ba6; margin-bottom: 4px; }
+.etat-vide-titre { font-weight: 600; color: var(--texte); }
+.etat-vide .btn { margin-top: 10px; }
+
+
+/* ---------------------------------------------------------------------
+   3. PAGE DE CONNEXION
+   Deux colonnes : marque à gauche (bleu nuit), formulaire à droite
+   --------------------------------------------------------------------- */
+.connexion { min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+.connexion-marque {
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  padding: 56px clamp(32px, 5vw, 72px);
+  background: radial-gradient(circle at 20% 10%, #1b4466 0%, transparent 55%), var(--bleu-nuit);
+  color: #fff;
+}
+.connexion-marque img { width: min(260px, 60%); height: auto; }
+.connexion-marque h1 { color: #fff; font-size: clamp(32px, 4vw, 46px); }
+.connexion-marque p { margin-top: 10px; color: #b9cddb; font-size: 18px; }
+
+.connexion-zone { display: grid; place-items: center; align-content: center; gap: 24px; padding: 48px 24px; }
+.connexion-formulaire { width: min(400px, 100%); display: grid; gap: 18px; }
+.connexion-formulaire h2 { font-size: 26px; margin-bottom: 4px; }
+.connexion-note { display: flex; align-items: center; gap: 8px; max-width: 400px; color: var(--texte-discret); font-size: 13px; }
+.connexion-note .ic { color: var(--vert); }
+
+/* Bloc « Mot de passe oublié ? » qui se déplie */
+.aide { font-size: 14px; color: var(--texte-discret); }
+.aide summary { cursor: pointer; color: var(--vert); font-weight: 600; width: fit-content; }
+.aide p { margin-top: 8px; }
+
+/* Icône ronde (page « Accès en attente ») */
+.pastille-icone { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--sable-clair); color: var(--sable-fonce); }
+.pastille-icone .ic { width: 26px; height: 26px; }
+
+
+/* ---------------------------------------------------------------------
+   4. CADRE : MENU LATÉRAL + BARRE DU HAUT
+   --------------------------------------------------------------------- */
+.cadre { min-height: 100vh; }
+
+/* Menu latéral (fixé à gauche sur ordinateur) */
+.barre-laterale {
+  position: fixed; inset: 0 auto 0 0; z-index: 30;
+  width: var(--largeur-menu);
+  display: flex; flex-direction: column;
+  background: var(--bleu-nuit); color: #c3d3de;
+  padding: 20px 14px;
+}
+.marque { display: flex; align-items: center; gap: 12px; padding: 4px 10px 22px; color: #fff; }
+.marque img { width: 40px; height: 40px; object-fit: contain; }
+.marque b { display: block; font: 600 17px/1.2 var(--police-titre); }
+.marque small { display: block; color: #8fa9bd; font-size: 12.5px; }
+
+.menu { display: grid; gap: 2px; }
+.menu-titre { margin: 18px 12px 6px; color: #7f9bb0; font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.menu-lien {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: var(--rayon-petit);
+  font-weight: 500; color: #c3d3de;
+}
+.menu-lien:hover { background: rgb(255 255 255 / 0.06); color: #fff; }
+.menu-lien.actif { background: rgb(207 155 63 / 0.16); color: #fff; box-shadow: inset 3px 0 0 var(--sable); }
+.menu-lien.actif .ic { color: var(--sable); }
+
+/* Bloc « personne connectée » en bas du menu */
+.profil-mini { margin-top: auto; display: flex; align-items: center; gap: 6px; padding-top: 14px; border-top: 1px solid rgb(255 255 255 / 0.1); }
+.profil-mini-lien { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--rayon-petit); }
+.profil-mini-lien:hover, .profil-mini-lien.actif { background: rgb(255 255 255 / 0.06); }
+.profil-mini-lien .avatar { background: rgb(255 255 255 / 0.12); color: #fff; }
+.profil-mini-texte { min-width: 0; }
+.profil-mini-texte b { display: block; color: #fff; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profil-mini-texte small { color: #8fa9bd; font-size: 12.5px; }
+
+/* Voile sombre derrière le menu ouvert sur téléphone */
+.voile { position: fixed; inset: 0; z-index: 25; background: rgb(12 34 54 / 0.45); }
+
+/* Zone principale (à droite du menu) */
+.principal { margin-left: var(--largeur-menu); min-width: 0; }
+
+/* Barre du haut : recherche + bouton d'ajout */
+.barre-haute {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px clamp(16px, 3vw, 40px);
+  background: rgb(243 245 244 / 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--trait);
+}
+.bouton-menu { display: none; }
+
+/* Recherche globale avec liste de résultats */
+.recherche-globale { position: relative; flex: 1; max-width: 560px; }
+.recherche-globale > .ic { position: absolute; left: 13px; top: 12px; color: var(--texte-discret); pointer-events: none; }
+.recherche-globale input { padding-left: 40px; padding-right: 40px; background: var(--surface); }
+.raccourci {
+  position: absolute; right: 10px; top: 10px;
+  padding: 1px 7px; border: 1px solid var(--trait); border-radius: 5px;
+  background: var(--survol); color: var(--texte-discret); font: 12px var(--police-texte);
+}
+.recherche-globale input:focus ~ .raccourci { display: none; }
+.resultats-globaux {
+  position: absolute; left: 0; right: 0; top: calc(100% + 6px);
+  max-height: 420px; overflow-y: auto; padding: 6px;
+  background: var(--surface); border: 1px solid var(--trait); border-radius: var(--rayon);
+  box-shadow: var(--ombre-forte);
+}
+.resultat { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: var(--rayon-petit); }
+.resultat:hover, .resultat:focus-visible { background: var(--survol); }
+.resultat-texte { flex: 1; min-width: 0; }
+.resultat-texte b { display: block; }
+.resultat-texte small { color: var(--texte-discret); }
+.resultat-vide { padding: 14px; color: var(--texte-discret); text-align: center; }
+.bouton-ajout { margin-left: auto; }
+
+/* Contenu de la page */
+.contenu { max-width: 1160px; margin: 0 auto; padding: 32px clamp(16px, 3vw, 40px) 64px; }
+
+
+/* ---------------------------------------------------------------------
+   5. TABLEAU DE BORD
+   --------------------------------------------------------------------- */
+.chiffres { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 20px; }
+.chiffre { display: grid; gap: 2px; padding: 20px; transition: transform 0.15s, box-shadow 0.15s; }
+.chiffre:hover { transform: translateY(-2px); box-shadow: var(--ombre-forte); }
+.chiffre-icone { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 10px; border-radius: 10px; }
+.chiffre-valeur { font: 600 34px/1.1 var(--police-titre); color: var(--bleu-nuit); font-variant-numeric: tabular-nums; }
+.chiffre-libelle { color: var(--texte-discret); font-size: 14px; font-weight: 500; }
+.chiffre-vert .chiffre-icone { background: var(--vert-clair); color: var(--vert); }
+.chiffre-bleu .chiffre-icone { background: var(--bleu-clair); color: var(--bleu-nuit); }
+.chiffre-sable .chiffre-icone { background: var(--sable-clair); color: var(--sable-fonce); }
+.chiffre-gris .chiffre-icone { background: #ebeff1; color: #55646f; }
+
+.grille-accueil { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+
+/* Liste des derniers dossiers */
+.liste-lignes { list-style: none; margin: 0 -10px; padding: 0; }
+.ligne-lien { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: var(--rayon-petit); }
+.ligne-lien:hover { background: var(--survol); }
+.ligne-texte { flex: 1; min-width: 0; }
+.ligne-texte b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ligne-texte small, .ligne-date { color: var(--texte-discret); font-size: 13px; }
+
+/* Raccourcis */
+.raccourcis { display: grid; gap: 8px; }
+.raccourci-carte { display: flex; align-items: center; gap: 14px; padding: 12px; border: 1px solid var(--trait); border-radius: var(--rayon-petit); }
+.raccourci-carte:hover { border-color: var(--vert); background: var(--survol); }
+.raccourci-carte b { display: block; font-size: 14.5px; }
+.raccourci-carte small { color: var(--texte-discret); font-size: 13px; }
+.raccourci-icone { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: var(--vert-clair); color: var(--vert); flex: none; }
+
+
+/* ---------------------------------------------------------------------
+   6. TABLEAUX ET FILTRES
+   --------------------------------------------------------------------- */
+.carte-tableau { padding: 0; overflow: hidden; }
+.barre-filtres { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 20px; border-bottom: 1px solid var(--trait); }
+
+/* Champ de filtre avec loupe */
+.champ-icone { position: relative; flex: 1; min-width: 220px; max-width: 360px; }
+.champ-icone .ic { position: absolute; left: 12px; top: 12px; color: var(--texte-discret); pointer-events: none; }
+.champ-icone input { padding-left: 38px; }
+
+/* Boutons de filtre par statut */
+.filtres-statut { display: flex; gap: 6px; flex-wrap: wrap; }
+.filtre {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 36px; padding: 6px 12px;
+  border: 1px solid var(--trait); border-radius: 99px;
+  background: var(--surface); color: var(--texte-discret);
+  font: 600 13.5px var(--police-texte); cursor: pointer;
+}
+.filtre span { padding: 0 7px; border-radius: 99px; background: var(--survol); font-size: 12px; }
+.filtre:hover { border-color: #b5c2bd; color: var(--texte); }
+.filtre.actif { border-color: var(--bleu-nuit); background: var(--bleu-nuit); color: #fff; }
+.filtre.actif span { background: rgb(255 255 255 / 0.18); }
+
+.champ-en-ligne { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.champ-en-ligne select { width: auto; }
+
+.compteur { padding: 12px 20px 0; color: var(--texte-discret); font-size: 13px; }
+
+/* Tableau */
+.tableau { width: 100%; border-collapse: collapse; }
+.tableau th {
+  padding: 12px 20px; text-align: left;
+  color: var(--texte-discret); font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--trait);
+}
+.tableau td { padding: 12px 20px; border-bottom: 1px solid var(--trait); vertical-align: middle; }
+.tableau tbody tr:last-child td { border-bottom: 0; }
+.tableau-cliquable tbody tr { cursor: pointer; }
+.tableau-cliquable tbody tr:hover { background: var(--survol); }
+.cellule-enfant { display: flex; align-items: center; gap: 12px; }
+.cellule-enfant a:hover { color: var(--vert); }
+.cellule-date { white-space: nowrap; color: var(--texte-discret); font-size: 14px; }
+.cellule-action { text-align: right; }
+.tableau-equipe td small { display: block; margin-top: 4px; font-size: 12.5px; }
+.tableau-equipe input[name="nom"] { max-width: 300px; }
+.pied-tableau { padding: 0 20px 16px; text-align: center; }
+.pied-tableau .btn { margin-top: 12px; }
+
+/* Interrupteur Actif / Inactif (page Équipe) */
+.interrupteur { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; }
+.interrupteur input { width: 18px; height: 18px; }
+
+
+/* ---------------------------------------------------------------------
+   7. FICHE ENFANT
+   --------------------------------------------------------------------- */
+.fiche-tete { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.fiche-identite { flex: 1; min-width: 220px; }
+.fiche-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.fiche-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Onglets */
+.onglets { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--trait); overflow-x: auto; }
+.onglet {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; margin-bottom: -1px;
+  border: 0; border-bottom: 2px solid transparent; background: none;
+  color: var(--texte-discret); font: 600 14.5px var(--police-texte);
+  cursor: pointer; white-space: nowrap;
+}
+.onglet:hover { color: var(--bleu-nuit); }
+.onglet[aria-selected="true"] { color: var(--bleu-nuit); border-bottom-color: var(--sable); }
+.compte { padding: 0 7px; border-radius: 99px; background: var(--survol); font-size: 12px; }
+
+/* Onglet Informations */
+.panneau h3 { margin: 28px 0 14px; }
+.panneau h3:first-child { margin-top: 0; }
+.champs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px 24px; margin: 0; }
+.champ dt { color: var(--texte-discret); font-size: 13px; margin-bottom: 2px; }
+.champ dd { margin: 0; font-weight: 500; white-space: pre-wrap; }
+.champ-large { grid-column: 1 / -1; }
+.texte-libre { white-space: pre-wrap; }
+.pied-fiche { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--trait); color: var(--texte-discret); font-size: 13px; }
+
+/* Onglet Documents */
+.documents { list-style: none; margin: 0 0 8px; padding: 0; }
+.document { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--trait); }
+.document-icone { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: var(--bleu-clair); color: var(--bleu-nuit); flex: none; }
+.document-texte { flex: 1; min-width: 0; }
+.document-texte b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.document-texte small { color: var(--texte-discret); font-size: 13px; }
+.document-actions { display: flex; align-items: center; gap: 4px; }
+.ajout-document { margin-top: 20px; padding: 20px; border: 1px dashed #c3cfca; border-radius: var(--rayon); background: #fafcfb; }
+.ajout-document h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; }
+.ajout-document .btn { margin-top: 16px; }
+
+/* Onglet Historique : frise verticale */
+.chronologie { list-style: none; margin: 0; padding: 0; }
+.evenement { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 14px; padding: 0 0 18px; }
+.evenement::before { content: ""; position: absolute; left: 5px; top: 14px; bottom: 0; width: 2px; background: var(--trait); }
+.evenement:last-child::before { display: none; }
+.evenement-point { width: 12px; height: 12px; margin-top: 5px; border-radius: 50%; background: var(--bleu-clair); box-shadow: 0 0 0 3px var(--surface); }
+.evenement-insert .evenement-point { background: var(--vert); }
+.evenement-update .evenement-point { background: var(--sable); }
+.evenement-delete .evenement-point { background: var(--rouge); }
+.evenement-consultation .evenement-point { background: #9fb6c8; }
+.evenement time { color: var(--texte-discret); font-size: 13px; white-space: nowrap; }
+
+
+/* ---------------------------------------------------------------------
+   8. FORMULAIRES
+   --------------------------------------------------------------------- */
+.grille-formulaire { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; }
+.formulaire { display: grid; gap: 8px; }
+.formulaire fieldset { margin: 0; padding: 0 0 24px; border: 0; border-bottom: 1px solid var(--trait); }
+/* Espace entre deux sections : une marge (un padding se placerait SOUS le titre <legend>) */
+.formulaire fieldset + fieldset { margin-top: 20px; }
+.formulaire legend { padding: 0; margin-bottom: 16px; font: 600 18px var(--police-titre); color: var(--bleu-nuit); }
+.formulaire-pied { display: flex; justify-content: flex-end; gap: 10px; padding-top: 16px; }
+.formulaire-simple { display: grid; gap: 16px; margin-top: 18px; max-width: 420px; }
+
+/* Choix du statut (boutons radio en forme de cartes) */
+.choix-statut { display: grid; gap: 8px; margin: 0 0 16px; padding: 0; border: 0; }
+.option-radio {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px; border: 1px solid var(--trait); border-radius: var(--rayon-petit);
+  font-weight: 400; cursor: pointer;
+}
+.option-radio:hover { background: var(--survol); }
+.option-radio:has(input:checked) { border-color: var(--vert); background: var(--vert-clair); }
+.option-radio input { margin-top: 4px; }
+.option-radio b { display: block; }
+.option-radio small { color: var(--texte-discret); font-size: 13px; }
+.champs-sortie { display: grid; gap: 14px; margin: 0; padding: 16px; border: 1px solid var(--trait); border-radius: var(--rayon-petit); background: #fafcfb; }
+.champs-sortie legend { padding: 0 6px; font-weight: 700; font-size: 14px; }
+
+/* Encadré d'information (page Équipe) */
+.encadre-info { display: flex; gap: 16px; margin-bottom: 20px; background: var(--bleu-clair); border-color: #d2dfea; box-shadow: none; }
+.encadre-info > .ic { width: 22px; height: 22px; color: var(--bleu-nuit); margin-top: 2px; }
+.legende-roles { margin: 10px 0 0; padding-left: 18px; color: var(--texte-discret); font-size: 14px; }
+
+/* Page Mon compte */
+.grille-compte { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 20px; align-items: start; }
+.compte-identite { display: grid; justify-items: center; gap: 8px; text-align: center; }
+.compte-identite .avatar { margin-bottom: 6px; }
+.titre-icone { display: flex; align-items: center; gap: 10px; }
+
+
+/* ---------------------------------------------------------------------
+   9. FENÊTRES DE DIALOGUE ET MESSAGES
+   --------------------------------------------------------------------- */
+.dialogue {
+  width: min(520px, calc(100% - 32px)); max-height: calc(100vh - 48px);
+  padding: 0; border: 0; border-radius: 16px;
+  box-shadow: var(--ombre-forte); color: var(--texte);
+}
+.dialogue::backdrop { background: rgb(12 34 54 / 0.5); }
+.dialogue form { display: grid; }
+.dialogue-tete { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px 0 24px; }
+.dialogue-corps { display: grid; gap: 14px; padding: 16px 24px; }
+.dialogue-erreur { margin: 0 24px; }
+.dialogue-pied { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px 20px; }
+
+/* Message en bas de l'écran */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 100;
+  max-width: calc(100% - 32px); padding: 12px 20px;
+  border-radius: 10px; background: var(--bleu-nuit); color: #fff;
+  font-weight: 500; box-shadow: var(--ombre-forte);
+  opacity: 0; pointer-events: none;
+  transform: translate(-50%, 16px); transition: opacity 0.2s, transform 0.2s;
+}
+.toast.visible { opacity: 1; transform: translate(-50%, 0); }
+.toast-erreur { background: var(--rouge); }
+
+
+/* ---------------------------------------------------------------------
+   10. TÉLÉPHONE ET TABLETTE
+   --------------------------------------------------------------------- */
+
+/* Tablette : le menu latéral devient un tiroir qu'on ouvre avec le bouton ☰ */
+@media (max-width: 980px) {
+  .barre-laterale { transform: translateX(-100%); transition: transform 0.2s; box-shadow: var(--ombre-forte); }
+  .menu-ouvert .barre-laterale { transform: none; }
+  .principal { margin-left: 0; }
+  .bouton-menu { display: inline-grid; }
+  .chiffres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grille-accueil { grid-template-columns: 1fr; }
+}
+
+/* Téléphone */
+@media (max-width: 720px) {
+  body { font-size: 15px; }
+  h1 { font-size: 24px; }
+  .connexion { grid-template-columns: 1fr; }
+  .connexion-marque { flex-direction: row; align-items: center; gap: 18px; padding: 24px; }
+  .connexion-marque img { width: 72px; }
+  .connexion-marque h1 { font-size: 24px; }
+  .connexion-marque p { font-size: 15px; margin-top: 4px; }
+  .connexion-zone { align-content: start; padding-top: 32px; }
+
+  .barre-haute { gap: 8px; padding: 10px 12px; }
+  .bouton-ajout { padding: 8px 10px; }
+  .bouton-ajout span, .raccourci { display: none; }
+  .contenu { padding-top: 20px; }
+  .carte { padding: 18px; }
+
+  .chiffre { padding: 16px; }
+  .chiffre-valeur { font-size: 28px; }
+  .ligne-date { display: none; }
+
+  .grille-formulaire, .grille-compte { grid-template-columns: 1fr; }
+  .formulaire-pied, .dialogue-pied { flex-direction: column-reverse; }
+  .formulaire-pied .btn, .dialogue-pied .btn { width: 100%; }
+
+  .fiche-tete { gap: 14px; }
+  .avatar-grand { width: 56px; height: 56px; font-size: 21px; }
+  .fiche-actions { width: 100%; }
+  .fiche-actions .btn { flex: 1; }
+  .document { flex-wrap: wrap; }
+  .document-actions { width: 100%; padding-left: 56px; }
+  .evenement { grid-template-columns: auto 1fr; }
+  .evenement time { grid-column: 2; }
+
+  /* Tableaux : chaque ligne devient une carte, avec l'intitulé devant chaque valeur */
+  .barre-filtres { padding: 14px; }
+  .champ-icone { max-width: none; }
+  .tableau thead { display: none; }
+  .tableau, .tableau tbody, .tableau tr, .tableau td { display: block; }
+  .tableau tr { padding: 14px; border-bottom: 1px solid var(--trait); }
+  .tableau td { padding: 3px 0; border: 0; }
+  .tableau td[data-label] { display: flex; justify-content: space-between; gap: 12px; text-align: right; }
+  .tableau td[data-label]::before { content: attr(data-label); color: var(--texte-discret); font-size: 13px; text-align: left; }
+  .tableau-equipe td[data-label] { display: grid; text-align: left; }
+  .tableau-equipe input[name="nom"] { max-width: none; }
+  .cellule-enfant { margin-bottom: 6px; }
+  .cellule-action { text-align: left; padding-top: 10px !important; }
+}
+
+/* Personnes sensibles aux animations : on les coupe */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
 }
